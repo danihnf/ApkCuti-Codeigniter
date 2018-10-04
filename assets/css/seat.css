@@ -1,0 +1,22 @@
+.corin-checkbox {
+  visibility: hidden;
+}
+.corin-checkbox-container {
+  
+  display: inline-block;
+}
+.corin-checkbox-sub {
+  float: left;
+  margin: 10px;
+  display: inline-block;
+  width: 100%;
+  height: 15px;
+}
+
+.corin-checkbox-sub.unchecked {
+  background: green;
+}
+
+.corin-checkbox-sub.checked {
+  background: red;
+}
