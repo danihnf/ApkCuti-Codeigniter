@@ -234,21 +234,10 @@ $stok="";
     <section class="content">
       <!-- FORM INPUT  -->
       <div class="col-md-7">
-      <div class="box box-info"><?php if($stok < 1){ ?>
-
-        <div class="box-header with-border"> 
-              <h3 class="box-title"> Sisa Cuti Anda Sudah Habis </h3>
-            </div><BR>
-            <center><div class="btn btn-sık"><span>HABIS!</span></div><br></center>
-        </BR>
-      </div></div>
-
-      <?php }else{ ?>
+      <div class="box box-info">
             <div class="box-header with-border"> 
               <h3 class="box-title"> Masukan Cuti </h3>
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
             <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>C_dashboard/inputcuti">
               <div class="box-body">
 
@@ -330,11 +319,11 @@ $stok="";
                         </label>
                   </div>
                 <?php } ?>
-                </div>  </div>
+                </div> </div>
 
                 <div class="form-group">
                     <div class="col-sm-3">
-                          <label class="control-label"> Alasan </label>
+                          <label style="padding-left: 12px" class="control-label">Alasan</label>
                     </div>
                   <div class="input-group col-sm-8">        
                       <input name="alasan" type="text" class="form-control" placeholder="Alasan">
@@ -348,12 +337,8 @@ $stok="";
                 <button type="submit" class="btn btn-primary pull-right">Submit</button>
               </div>
               </div>
-
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
             </div>
-          </form> <?php } ?>
+          </form>
 
       <div class="row">
         <div class="col-xs-12">
@@ -371,6 +356,7 @@ $stok="";
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
+              <?php if($stok < 1){ ?>
               <table class="table table-hover">
               <thead>
                 <tr>

@@ -95,7 +95,7 @@
               <!-- User image -->
               <li class="user-header">
                 <img src="<?php echo base_url(); ?>admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+                
                 <p>
                   <?php echo $this->session->userdata("nik"); ?> - RPL 1
                   <small>ADMIN</small>
