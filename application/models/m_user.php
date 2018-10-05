@@ -19,18 +19,27 @@ class M_user extends CI_Model {
         $this->db->from('cutiges');
         $this->db->join('pegawai', 'pegawai.nik = cutiges.nik_pegawai', 'left');
          $this->db->where("nik",$nik);
-         $this->db->where("cutiges.status = '1'");
+         $this->db->where("cutiges.status = '1'")
+            ->order_by("stok_cuti","asc");
         return $this->db->get();
     }
 
     public function idcuti($nik){
         $this->db->where("nik",$nik);
             return $this->db->get('pegawai');
-    }   
+    } 
 
-    public function update($id,$data){
+    public function laststok($nik){
 
-        $this->db->where("id",$id);
+        $this->db->where("nik_pegawai",$nik)    
+                ->order_by("stok_cuti", "asc")
+                ->limit(1);
+        return $this->db->get('cutiges');
+    }       
+
+    public function apdet($data,$nik){
+
+        $this->db->where("nik",$nik);
         $this->db->update('pegawai',$data);
     }
 
@@ -39,8 +48,18 @@ class M_user extends CI_Model {
         return $this->db->get('pegawai')->result();
     }
 
+    public function datauser(){
+
+        return $this->db->get('pegawai')->num_rows();
+    }
+
     function jumlah_data(){
         $this->db->where("status = '0'");
+        return $this->db->get('cutiges')->num_rows();
+
+    }
+
+    function cek(){
         return $this->db->get('cutiges')->num_rows();
 
     }
@@ -75,6 +94,7 @@ class M_user extends CI_Model {
         $this->db->where("cutiges.status = '0'");
         return $this->db->get(); 
     }
+
 
     public function hapuskonfirmasi($id){
 

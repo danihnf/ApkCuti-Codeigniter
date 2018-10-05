@@ -34,7 +34,7 @@ class C_login extends CI_Controller {
 
 			$this->session->set_userdata($data_session);
 
-			redirect(base_url("C_dashboard"));
+			redirect(base_url("C_dashboard/index/".$nik));
 
 		}else{
 			echo "<script>alert('Username atau Password salah! Silahkan cek kembali');history.go(-1);</script>";	

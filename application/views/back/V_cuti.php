@@ -109,13 +109,13 @@
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
+                    <a href="#"></a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
+                    <a href="#"></a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
+                    <a href="#"></a>
                   </div>
                 </div>
                 <!-- /.row -->
@@ -168,7 +168,7 @@
       <ul class="sidebar-menu" data-widget="tree">
 
       <li>
-          <a href="<?php echo base_url(); ?>C_dashboard">
+          <a href="<?php echo base_url(); ?>C_dashboard/index/<?php echo $this->session->userdata('nik');?>">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
               
@@ -205,9 +205,6 @@
           </a>
         </li>
 
-        
-
-        <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
         <li class="header">LABELS</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
@@ -283,8 +280,8 @@
                       
                           <form method="POST" action="<?php base_url(); ?>C_konfirmasi/konfirmasi/<?php echo $obj->id; ?>">
 
-                            <input type="hidden" value="1" name="status">
-                            <input type="hidden" value="
+                      
+                            <input type="text" name="stok" value="
                             <?php 
                               $dt1 = date_create($obj->mulai);
                               $dt2 = date_create($obj->akhir);
@@ -292,7 +289,10 @@
                               $range = date_diff($dt1,$dt2);
                                 echo ($stok - $range->format('%d'));
                             ?>
-                            " name="stok_cuti"> 
+                            ">
+
+                            <input type="hidden" name="mulai" value="<?php echo $obj->mulai; ?>">
+                            <input type="hidden" name="akhir" value="<?php echo $obj->akhir; ?>">
 
                         <button type="submit" class="btn btn-warning">Konfirmasi</button>
                           

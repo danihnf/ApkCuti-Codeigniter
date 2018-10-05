@@ -12,10 +12,29 @@ class C_dashboard extends CI_Controller {
 
 	}
 	
-	public function index(){
+	public function index($nik){
 		$jumlah['jumlah'] = $this->m_user->jumlah_data();
+		$jumlah['user'] = $this->m_user->datauser();
 		$jumlah['cutiges'] = $this->m_user->cuti();
+		$jumlah['cutiku'] = $this->m_user->idcuti($nik);
 		$this->load->view('back/V_admin', $jumlah);
+	}
+
+	public function apdetuser($nik){
+
+		$nama = $this->input->post('nama');
+		$password = $this->input->post('password');
+
+		$data = array(
+
+			'nama' => $nama,
+			'password' => md5($password)
+
+		);
+
+		$this->m_user->apdet($data,$nik);
+
+		redirect('C_dashboard/index/'.$nik);
 	}
 
 	public function user(){
@@ -63,8 +82,8 @@ class C_dashboard extends CI_Controller {
 		$stok = $this->input->post('stok');
 		$alasan = $this->input->post('alasan');
 		$status = $this->input->post('status');
-			$tgl = date('Y-m-d H:i', strtotime($mulai));
-			$tgl2 = date('Y-m-d H:i', strtotime($akhir));
+			$tgl = date('Y-m-d', strtotime($mulai));
+			$tgl2 = date('Y-m-d', strtotime($akhir));
 		$data = array(
 			
 			'id_pegawai' => $id_pegawai,
@@ -97,7 +116,9 @@ class C_dashboard extends CI_Controller {
 		
 		$data['cutiid'] = $this->m_user->nikcuti($nik);
 		$data['cutiku'] = $this->m_user->idcuti($nik);
+		$data['terakhir'] = $this->m_user->laststok($nik);
 		$data['jumlah'] = $this->m_user->jumlah_data();
+		$data['cekdata'] = $this->m_user->cek();
 		$data['cutiges'] = $this->m_user->cuti();
 
 		$this->load->view('back/V_cutiuser',$data);	

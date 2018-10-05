@@ -22,12 +22,18 @@ class C_konfirmasi extends CI_Controller {
 
 	public function konfirmasi($id){
 
-		$status = $this->input->post('status');
-		$stok_cuti = $this->input->post('stok_cuti');
+		$stok = $this->input->post('stok');
+		$mulai = $this->input->post('mulai');
+		$akhir = $this->input->post('akhir');
+			$tgl = date('Y-m-d', strtotime($mulai));
+			$tgl2 = date('Y-m-d', strtotime($akhir));
+
 		$data = array(
 
-			'status' => $status,
-			'stok_cuti' => $stok_cuti
+			'stok_cuti' => $stok,
+			'mulai' => $tgl,
+			'akhir' => $tgl2,
+			'status' => 1
 		);
 
 		$this->m_user->konfirmasi($data,$id);

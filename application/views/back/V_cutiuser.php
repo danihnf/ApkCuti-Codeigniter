@@ -10,6 +10,27 @@ foreach ($cutiku->result() as $obj){
 }
 ?>
 
+<?php
+
+$cuti = "";
+$status = "";
+foreach ($cutiid->result() as $obj){
+
+  $cuti = $obj->stok_cuti;
+  $status = $obj->status;
+
+
+}
+?>
+
+<?php 
+$stok="";
+                    foreach ($terakhir->result() as $obj1) {
+                    $stok = $obj1->stok_cuti;
+                    
+                  }
+                  ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +60,7 @@ foreach ($cutiku->result() as $obj){
   <!-- Date Picker -->
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/radio.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -73,31 +95,7 @@ foreach ($cutiku->result() as $obj){
           <!-- Messages: style can be found in dropdown.less-->
           
           <!-- Notifications: style can be found in dropdown.less -->
-          <li class="dropdown notifications-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning"><?php echo $jumlah; ?></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header"><?php echo $jumlah; ?> Orang menunggu konfirmasi Cuti</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <?php foreach ($cutiges->result() as $obj1) {
-                    $nama = $obj1->nama;
-
-                  ?>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> <?php echo $nama; ?>
-                    </a>
-                  </li>
-                  <?php } ?>
-                </ul>
-              </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
+          
           <!-- Tasks: style can be found in dropdown.less -->
           
           <!-- User Account: style can be found in dropdown.less -->
@@ -179,7 +177,7 @@ foreach ($cutiku->result() as $obj){
       <ul class="sidebar-menu" data-widget="tree">
 
       <li>
-          <a href="<?php echo base_url(); ?>C_dashboard">
+          <a href="<?php echo base_url(); ?>C_dashboard/index/<?php echo $this->session->userdata('nik'); ?>">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
               
@@ -207,17 +205,8 @@ foreach ($cutiku->result() as $obj){
             </span>
           </a>
         </li>
-
-        <li>
-          <a href="<?php echo base_url(); ?>C_konfirmasi">
-            <i class="fa fa-user"></i> <span>Konfirmasi Cuti</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-orange">konfirmasi</small>
-            </span>
-          </a>
-        </li>
       
-        <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+        
         <li class="header">LABELS</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
@@ -244,9 +233,18 @@ foreach ($cutiku->result() as $obj){
     <!-- Main content -->
     <section class="content">
       <!-- FORM INPUT  -->
-      <div class="col-md-6">
-      <div class="box box-info">
-            <div class="box-header with-border">
+      <div class="col-md-7">
+      <div class="box box-info"><?php if($stok < 1){ ?>
+
+        <div class="box-header with-border"> 
+              <h3 class="box-title"> Sisa Cuti Anda Sudah Habis </h3>
+            </div><BR>
+            <center><div class="btn btn-sık"><span>HABIS!</span></div><br></center>
+        </BR>
+      </div></div>
+
+      <?php }else{ ?>
+            <div class="box-header with-border"> 
               <h3 class="box-title"> Masukan Cuti </h3>
             </div>
             <!-- /.box-header -->
@@ -292,7 +290,47 @@ foreach ($cutiku->result() as $obj){
                       </script>
                 </div>
 
-                <input type="hidden" name="stok" value="12" class="form-control">
+                <input type="hidden" name="stok" value="
+                <?php 
+                    foreach ($terakhir->result() as $obj1) {
+                    $stok = $obj1->stok_cuti;
+                    echo $stok;
+                  }
+                  ?>" class="form-control">
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                          <label class="control-label"> Pernah Cuti ? </label>
+                    </div>
+                    <?php if($cekdata > 0){ ?>
+                  <div class="input-group col-sm-8">        
+                    <label>
+                          <input type="radio" value="<?php 
+                        foreach ($terakhir->result() as $obj1) {
+                          $stok = $obj1->stok_cuti;
+                          echo $stok;
+                        }
+                        ?>" checked name="stok"> 
+                          <div class="btn btn-sık"><span>Pernah</span></div> 
+                    </label>
+                    <?php }else{ ?>  
+                  <div class="input-group col-sm-8">        
+                    <label>
+                          <input type="radio" value="<?php 
+                        foreach ($terakhir->result() as $obj1) {
+                          $stok = $obj1->stok_cuti;
+                          echo $stok;
+                        }
+                      ?>" checked name="stok"> 
+                          <div class="btn btn-sık"><span>Pernah</span></div> 
+                    </label>
+                    <label>
+                          <input type="radio" value="12" name="stok"> 
+                          <div class="btn btn-sık"><span>Belum Pernah</span></div>
+                        </label>
+                  </div>
+                <?php } ?>
+                </div>  </div>
 
                 <div class="form-group">
                     <div class="col-sm-3">
@@ -315,7 +353,7 @@ foreach ($cutiku->result() as $obj){
               </div>
               <!-- /.row -->
             </div>
-          </form>
+          </form> <?php } ?>
 
       <div class="row">
         <div class="col-xs-12">
@@ -327,9 +365,7 @@ foreach ($cutiku->result() as $obj){
                 <div class="input-group input-group-sm" style="width: 150px;">
                   <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
+                  
                 </div>
               </div>
             </div>
@@ -344,6 +380,7 @@ foreach ($cutiku->result() as $obj){
                   <th>Dari Tanggal</th>
                   <th>Sampai Tanggal</th>
                   <th>Jumlah Cuti</th>
+                  <th>Sisa Cuti/Th</th>
                   <th>Alasan</th>
                 </tr>
                   <?php
@@ -355,8 +392,8 @@ foreach ($cutiku->result() as $obj){
                       <td><?php echo $no; ?></td>
                       <td><?php echo $obj1->nik; ?></td>  
                       <td><?php echo $obj1->nama; ?></td>   
-                      <td><?php echo $obj1->mulai; ?></td>   
-                      <td><?php echo $obj1->akhir; ?></td>   
+                      <td><?php echo date( 'd F Y', strtotime($obj1->mulai)); ?></td> 
+                      <td><?php echo date( 'd F Y', strtotime($obj1->akhir)); ?></td>   
                       <td><?php
 
                       $dt1 = date_create($obj1->mulai);
@@ -364,7 +401,9 @@ foreach ($cutiku->result() as $obj){
 
                       $range = date_diff($dt1,$dt2);
                         echo $range->format('%d Hari');
-                      ?></td>   
+                      ?></td>
+
+                      <td><?php echo $obj1->stok_cuti; ?> Hari</td>  
                       <td><?php echo $obj1->alasan; ?></td>  
 
                 </tr>
@@ -627,6 +666,7 @@ foreach ($cutiku->result() as $obj){
 <script src="<?php echo base_url(); ?>admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<?php echo base_url(); ?>admin/bower_components/fastclick/lib/fastclick.js"></script>
+
 <script src="<?php echo base_url(); ?>admin/bower_components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url(); ?>admin/dist/js/adminlte.min.js"></script>
