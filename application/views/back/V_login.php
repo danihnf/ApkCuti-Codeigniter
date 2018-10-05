@@ -40,7 +40,6 @@
 							</select>
 						</div>
 						<button type="submit" class="btn btn-primary" value="login">Login</button>
-						<a href="#" class="btn btn-link"> Sign Up </a>
 					</form>
 					</div>
 				</div>
