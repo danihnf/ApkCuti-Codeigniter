@@ -238,6 +238,7 @@ $stok="";
             <div class="box-header with-border"> 
               <h3 class="box-title"> Masukan Cuti </h3>
             </div>
+            <?php if($stok == null){ ?>
             <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>C_dashboard/inputcuti">
               <div class="box-body">
 
@@ -287,40 +288,18 @@ $stok="";
                   }
                   ?>" class="form-control">
 
-                <div class="form-group">
-                    <div class="col-sm-3">
-                          <label class="control-label"> Pernah Cuti ? </label>
-                    </div>
                     <?php if($cekdata > 0){ ?>
-                  <div class="input-group col-sm-8">        
-                    <label>
-                          <input type="radio" value="<?php 
+                          <input type="hidden" value="<?php 
                         foreach ($terakhir->result() as $obj1) {
                           $stok = $obj1->stok_cuti;
                           echo $stok;
                         }
-                        ?>" checked name="stok"> 
-                          <div class="btn btn-sık"><span>Pernah</span></div> 
+                        ?>" name="stok"> 
                     </label>
                     <?php }else{ ?>  
-                  <div class="input-group col-sm-8">        
-                    <label>
-                          <input type="radio" value="<?php 
-                        foreach ($terakhir->result() as $obj1) {
-                          $stok = $obj1->stok_cuti;
-                          echo $stok;
-                        }
-                      ?>" checked name="stok"> 
-                          <div class="btn btn-sık"><span>Pernah</span></div> 
-                    </label>
-                    <label>
-                          <input type="radio" value="12" name="stok"> 
-                          <div class="btn btn-sık"><span>Belum Pernah</span></div>
-                        </label>
-                  </div>
-                <?php } ?>
-                </div> </div>
-
+                          <input type="hidden" value="12" name="stok"> 
+                <?php } ?></div>
+    
                 <div class="form-group">
                     <div class="col-sm-3">
                           <label style="padding-left: 12px" class="control-label">Alasan</label>
@@ -339,6 +318,95 @@ $stok="";
               </div>
             </div>
           </form>
+        <?php }elseif ($stok > 0) { ?>
+          <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>C_dashboard/inputcuti">
+              <div class="box-body">
+
+                  <input type="hidden" name="op" value="<?php echo $op='tambah' ?>" class="form-control">
+                  <input type="hidden" name="nik_pegawai" value="<?php echo $this->session->userdata('nik'); ?>" class="form-control">
+                  <input type="hidden" name="id_pegawai" value="<?php echo $id; ?>" class="form-control">
+
+              <div class="form-group">
+                  <div class="col-sm-3">
+                        <label class="control-label">Dari Tanggal</label>
+                    </div>
+                  <div class='input-group col-sm-8 date' id='datetimepicker1'>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    <input name="mulai" type="text" class="form-control" />
+                  </div>
+                      <script type="text/javascript">
+                          $(function () {
+                              $('#datetimepicker1').datetimepicker();
+                          });
+                      </script>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-3">
+                        <label class="control-label">Sampai Tanggal</label>
+                    </div>
+                  <div class='input-group col-sm-8 date' id='datetimepicker2'>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    <input name="akhir" type="text" class="form-control" />
+                  </div>
+                      <script type="text/javascript">
+                          $(function () {
+                              $('#datetimepicker2').datetimepicker();
+                          });
+                      </script>
+                </div>
+
+                <input type="hidden" name="stok" value="
+                <?php 
+                    foreach ($terakhir->result() as $obj1) {
+                    $stok = $obj1->stok_cuti;
+                    echo $stok;
+                  }
+                  ?>" class="form-control">
+
+                    <?php if($cekdata > 0){ ?>
+                          <input type="hidden" value="<?php 
+                        foreach ($terakhir->result() as $obj1) {
+                          $stok = $obj1->stok_cuti;
+                          echo $stok;
+                        }
+                        ?>" name="stok"> 
+                    </label>
+                    <?php }else{ ?>  
+                          <input type="hidden" value="12" name="stok"> 
+                <?php } ?></div>
+    
+                <div class="form-group">
+                    <div class="col-sm-3">
+                          <label style="padding-left: 12px" class="control-label">Alasan</label>
+                    </div>
+                  <div class="input-group col-sm-8">        
+                      <input name="alasan" type="text" class="form-control" placeholder="Alasan">
+                  </div>
+                </div>
+
+                <input type="hidden" name="status" value="0" class="form-control">
+
+                <div class="box-footer">
+                
+                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+              </div>
+              </div>
+            </div>
+          </form>
+          <?php }else{ ?>
+
+          <div class="box-header with-border"> 
+              <h3 class="box-title"> Sisa Cuti Anda Sudah Habis </h3>
+            </div><BR>
+            <center><div class="btn btn-sık"><span>HABIS!</span></div><br></center></br>
+          </div></div>
+
+        <?php } ?>
 
       <div class="row">
         <div class="col-xs-12">
@@ -356,7 +424,6 @@ $stok="";
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-              <?php if($stok < 1){ ?>
               <table class="table table-hover">
               <thead>
                 <tr>
